@@ -11,8 +11,11 @@ const io = new Server(server);
 
 
 // Socket Code
-io.on('connection', (soket) => {
-    console.log("new User connected", soket.id);
+io.on('connection', (socket) => {
+    console.log("new User connected", socket.id);
+    socket.on('msg', (message)=>{
+        io.emit('user-msg', message);
+    })
 });
 
 

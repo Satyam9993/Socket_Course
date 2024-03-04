@@ -7,9 +7,26 @@
 </head>
 <body>
     <h1>Chatt App</h1>
+    <div id="msgs"></div>
+    <input type="text" id="message" placeholder="Enter Mesage">
+    <button id="send_btn">Send</button>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
+        const btn = document.getElementById('send_btn');
+        const messageInp = document.getElementById('message');
+        const allmsgs = document.getElementById('msgs');
+        btn.addEventListener('click', (e)=>{
+            const message = messageInp.value;
+            socket.emit('msg', message)
+        })
+
+        socket.on('user-msg', (msg)=>{
+            const p = document.createElement('p');
+            p.innerText = msg;
+            allmsgs.appendChild(p);
+        })
     </script>
 </body>
 </html>
